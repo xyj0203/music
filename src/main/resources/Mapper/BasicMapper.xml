@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.music.Mapper.BasicMapper">
+
+    <insert id="register" parameterType="com.example.music.Entity.Pojo.Entity.User">
+        insert into x_user(user_id,account,password,email,head_img,level,online)
+        values(null,#{account},#{password},#{email},#{headImg},#{userType.level},#{online})
+    </insert>
+    <select id="selectUserByEmail" resultType="com.example.music.Entity.Pojo.Entity.User"
+            parameterType="java.lang.String">
+        select * from x_user where email = #{email}
+    </select>
+    <select id="selectUserByAccount" resultType="com.example.music.Entity.Pojo.Entity.User"
+            parameterType="java.lang.String">
+        select * from x_user where account = #{account}
+    </select>
+</mapper>
