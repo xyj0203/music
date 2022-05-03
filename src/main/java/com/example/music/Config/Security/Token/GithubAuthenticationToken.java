@@ -6,19 +6,21 @@ import org.springframework.security.core.GrantedAuthority;
 import java.util.Collection;
 
 
-public class GitubAuthenticationToken extends AbstractAuthenticationToken {
+public class GithubAuthenticationToken extends AbstractAuthenticationToken {
 
-    private String principal;
-    private String credentials;
+    private Object principal;
+    private Object credentials;
 
-    public GitubAuthenticationToken(String principal, String credentials) {
+    public GithubAuthenticationToken(String principal, String credentials) {
         super(null);
         this.principal = principal;
         this.credentials = credentials;
         setAuthenticated(false);
     }
 
-    public GitubAuthenticationToken(String principal, String credentials,Collection<? extends GrantedAuthority> authorities) {
+
+
+    public GithubAuthenticationToken(Object principal, Object credentials, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.principal = principal;
         this.credentials = credentials;
@@ -27,11 +29,11 @@ public class GitubAuthenticationToken extends AbstractAuthenticationToken {
 
     @Override
     public Object getCredentials() {
-        return null;
+        return this.credentials;
     }
 
     @Override
     public Object getPrincipal() {
-        return null;
+        return this.principal;
     }
 }

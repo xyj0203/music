@@ -16,4 +16,7 @@
             parameterType="java.lang.String">
         select * from x_user where account = #{account}
     </select>
+    <select id="getImg" resultType="com.example.music.Entity.Pojo.Entity.Img" parameterType="java.lang.String">
+        select * from demo where img_decription like concat('%',#{name},'%')
+    </select>
 </mapper>

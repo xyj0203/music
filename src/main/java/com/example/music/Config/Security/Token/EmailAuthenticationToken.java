@@ -7,34 +7,34 @@ import java.util.Collection;
 
 public class EmailAuthenticationToken extends AbstractAuthenticationToken {
     //邮箱
-    private String email;
+    private Object principle;
     //验证码
-    private String credential;
+    private Object credential;
     //后台产生验证码
     private String code;
 
-    public EmailAuthenticationToken(String email, String credential) {
+    public EmailAuthenticationToken(Object email, Object credential) {
         super(null);
-        this.email = email;
+        this.principle = email;
         this.credential = credential;
         setAuthenticated(false);
     }
 
-    public EmailAuthenticationToken(String email, String credential, Collection<? extends GrantedAuthority> authorities) {
+    public EmailAuthenticationToken(Object email, Object credential, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
-        this.email = email;
+        this.principle = email;
         this.credential = credential;
         setAuthenticated(false);
     }
 
     @Override
-    public String getCredentials() {
+    public Object getCredentials() {
         return this.credential;
     }
 
     @Override
-    public String getPrincipal() {
-        return this.email;
+    public Object getPrincipal() {
+        return this.principle;
     }
 
 

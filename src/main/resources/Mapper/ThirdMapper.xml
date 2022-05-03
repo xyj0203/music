@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.music.Mapper.ThirdMapper">
+
+    <update id="updateifexist">
+        INSERT INTO third_login(THIRD_ID, THIRD_ACCOUNT, THIRD_TYPE, THIRD_NAME, THIRD_AVTAR, THIRD_COMPANY, THIRD_DECRIPTION, THIRD_ACCOUNTID)
+        VALUES (NULL,#{thirdAccount},#{thirdType},#{thirdName},#{thirdAvtar},#{thirdCompany},#{thirdDecription},#{thirdAccountId})
+        ON DUPLICATE key update
+        THIRD_NAME = #{thirdName},
+        THIRD_DECRIPTION = #{thirdDecription},
+        THIRD_AVTAR = #{thirdAvtar},
+        THIRD_COMPANY = #{thirdCompany}
+    </update>
+    <select id="selectByThirdId" resultType="com.example.music.Entity.Pojo.Entity.ThirdUser">
+        select *
+        from third_login
+        where third_accountId = #{thirdId}
+    </select>
+</mapper>

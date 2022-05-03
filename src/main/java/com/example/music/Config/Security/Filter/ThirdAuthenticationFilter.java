@@ -1,11 +1,14 @@
 package com.example.music.Config.Security.Filter;
 
 import cn.hutool.core.lang.Validator;
+import cn.hutool.jwt.JWT;
 import com.example.music.Config.Security.Token.EmailAuthenticationToken;
-import com.example.music.Config.Security.Token.GitubAuthenticationToken;
+import com.example.music.Config.Security.Token.GithubAuthenticationToken;
+import com.example.music.Config.Security.TokenManager;
+import com.example.music.Entity.Pojo.Entity.SecurityUser;
 import com.example.music.Entity.Pojo.ResultObjectModel;
+import com.example.music.Mapper.BasicMapper;
 import com.example.music.Utils.RedisUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,6 +22,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class ThirdAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
@@ -26,10 +31,14 @@ public class ThirdAuthenticationFilter extends AbstractAuthenticationProcessingF
     //仅支持Post请求
     private boolean PostOnly = true;
     private RedisUtils redisUtils;
+    private TokenManager tokenManager;
+    private BasicMapper basicMapper;
 
-    public ThirdAuthenticationFilter(RedisUtils redisUtils) {
+    public ThirdAuthenticationFilter(RedisUtils redisUtils, TokenManager tokenManager,BasicMapper basicMapper) {
         super(new AntPathRequestMatcher("/Basic/login", "POST"));
         this.redisUtils = redisUtils;
+        this.tokenManager = tokenManager;
+        this.basicMapper = basicMapper;
     }
 
     @Override
@@ -68,7 +77,7 @@ public class ThirdAuthenticationFilter extends AbstractAuthenticationProcessingF
                 }
                 break;
             case 2:
-                authRequest = new GitubAuthenticationToken(principal, credentials);
+                authRequest = new GithubAuthenticationToken(principal, credentials);
                 break;
             default:
                 authRequest = new UsernamePasswordAuthenticationToken(principal, credentials);
@@ -83,8 +92,12 @@ public class ThirdAuthenticationFilter extends AbstractAuthenticationProcessingF
             if (Validator.isEmail(principal)){
                 if(credentials.length() == 6){
                     String scode = (String)redisUtils.get(principal);
-                    if (scode != null && scode.equals(credentials)){
-                        return null;
+                    if (scode != null && scode.equals(credentials) ){
+                        if (basicMapper.selectUserByEmail(principal) == null){
+                            return "用户不存在，请先注册";
+                        }else{
+                            return null;
+                        }
                     }else{
                         return "验证码错误";
                     }
@@ -105,6 +118,13 @@ public class ThirdAuthenticationFilter extends AbstractAuthenticationProcessingF
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        ResultObjectModel.returnvalue(request, response,ResultObjectModel.success("登录成功！"));
+        Object principal = authResult.getPrincipal();
+        SecurityUser securityUser = (SecurityUser) principal;
+        Map<String,String> map = new HashMap<>();
+        map.put("id",securityUser.getUserId().toString());
+        map.put("loginType",securityUser.getLoginType().getType().toString());
+        map.put("level",securityUser.getLevel().toString());
+        String token = tokenManager.createToken(map);
+        ResultObjectModel.returnvalue(request, response,ResultObjectModel.success("登录成功！",token));
     }
 }

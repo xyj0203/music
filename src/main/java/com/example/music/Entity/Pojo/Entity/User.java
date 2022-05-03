@@ -14,7 +14,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class User {
-    private Integer userId;
+    private Long userId;
     private String account;
     @Email(message = "必须为邮箱格式")
     private String email;
@@ -27,4 +27,6 @@ public class User {
     private Integer state = 0;
     private String area;
     private Integer online = 1;
+    private Boolean isThirdLogin = false;
+    private Integer level;
 }

@@ -1,5 +1,6 @@
 package com.example.music.Config.Security;
 
+import com.example.music.Config.Security.Interceptor.AccessSecurityInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableWebSecurity
@@ -23,6 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private AccessSecurityInterceptor accessSecurityInterceptor;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -46,8 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(new CustomizedAccessDeniedHandler());
         http.apply(thirdAuthenticationSecurityConfig);
         http.csrf().disable() // 解决POST请求403错误
-                .authorizeRequests()
-                .anyRequest().permitAll();
+                .authorizeRequests().anyRequest().authenticated();
+        http.addFilterBefore(accessSecurityInterceptor, FilterSecurityInterceptor.class);
     }
 
     @Bean
@@ -59,5 +64,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder);
+    }
+
+    @Bean
+    public RestTemplate restTemplate(){
+        return new RestTemplate();
     }
 }
