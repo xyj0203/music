@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 public enum UserType {
-    UNKNOWN(1,"用户","未登陆的用户"),
+    UNKNOWN(1,"未登录用户","未登陆的用户"),
     USER(2,"用户","已经登陆的用户"),
     VIP_USER(3,"VIP用户","充值获得的VIP用户"),
     SINGERSUPER(4,"歌手","个人歌手"),

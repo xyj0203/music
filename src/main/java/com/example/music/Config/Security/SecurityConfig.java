@@ -38,7 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/v2/**",
                         "/api/**",
                         "/doc.html",
-                        "/Basic/**")
+                        "/Basic/**",
+                        "/message/**")
                 .permitAll();
 
         http.authorizeRequests()

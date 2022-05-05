@@ -1,6 +1,8 @@
 package com.example.music.Mapper;
 
 import com.example.music.Entity.Pojo.Entity.Permission;
+import com.example.music.Entity.Pojo.Entity.Role;
+import com.example.music.Entity.Util.UserType;
 
 import java.util.List;
 import java.util.Map;
@@ -27,4 +29,10 @@ public interface PermissionMapper {
      * @return
      */
     List<String> getNameByLevel(int parseInt);
+
+    /**
+     * 查询所有的角色
+     * @return
+     */
+    List<Role> selectForAllRole();
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.io.Serializable;
 @Getter
 @Setter
+@ToString
 public class ResultObjectModel<T>{
     /**
      * 返回是否成功

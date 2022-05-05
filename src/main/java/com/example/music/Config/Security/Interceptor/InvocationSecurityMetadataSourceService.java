@@ -14,13 +14,14 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class InvocationSecurityMetadataSourceService implements FilterInvocationSecurityMetadataSource {
 
     @Autowired
     private PermissionMapper permissionMapper;
-    private HashMap<String, Collection<ConfigAttribute>> map =null;
+    private Map<String, Collection<ConfigAttribute>> map =null;
     @Autowired
     private RedisUtils redisUtils;
     public void loadResourceDefine(){
@@ -32,7 +33,7 @@ public class InvocationSecurityMetadataSourceService implements FilterInvocation
         }else{
             permissions = (List<Permission>) o;
         }
-        map = new HashMap<>();
+        map = new ConcurrentHashMap<>();
         Collection<ConfigAttribute> configAttributes;
         ConfigAttribute configAttribute;
         for (Permission permission : permissions) {

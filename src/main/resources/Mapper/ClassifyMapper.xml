@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.music.Mapper.ClassifyMapper">
+
+    <insert id="addEmotion">
+        insert into classify_emotion (emotion_title)
+        values (#{emotion})
+    </insert>
+    <insert id="addLanguage">
+        insert into classify_language (language_title)
+        values (#{language})
+    </insert>
+    <insert id="addScene">
+        insert into classify_scene (scene_title)
+        values (#{scene})
+    </insert>
+    <insert id="addTheme">
+        insert into classify_theme (theme_title)
+        values (#{theme})
+    </insert>
+    <insert id="addGenre">
+        insert into classify_genre (genre_title)
+        values (#{genre})
+    </insert>
+    <delete id="delLanguage" parameterType="java.lang.Integer">
+        delete from classify_language where language_id = #{id}
+    </delete>
+    <delete id="delGenre" parameterType="java.lang.Integer">
+        delete from classify_genre where genre_id = #{id}
+    </delete>
+    <delete id="delScene" parameterType="java.lang.Integer">
+        delete from classify_scene where scene_id = #{id}
+    </delete>
+    <delete id="delEmotion" parameterType="java.lang.Integer">
+        delete from classify_emotion where emotion_id = #{id}
+    </delete>
+    <delete id="delTheme" parameterType="java.lang.Integer">
+        delete from classify_theme where theme_id = #{id}
+    </delete>
+    <select id="getLanguageList" resultType="com.example.music.Entity.Pojo.Entity.MusicType">
+        select language_id as id,language_title as name from classify_language
+    </select>
+    <select id="getGenreList" resultType="com.example.music.Entity.Pojo.Entity.MusicType">
+        select genre_id as id,genre_title as name from classify_genre
+    </select>
+    <select id="getSceneList" resultType="com.example.music.Entity.Pojo.Entity.MusicType">
+        select scene_id as id,scene_title as name from classify_scene
+    </select>
+    <select id="getEmotionList" resultType="com.example.music.Entity.Pojo.Entity.MusicType">
+        select emotion_id as id,emotion_title as name from classify_emotion
+    </select>
+    <select id="getThemeList" resultType="com.example.music.Entity.Pojo.Entity.MusicType">
+        select theme_id as id,theme_title as name from classify_theme
+    </select>
+</mapper>
