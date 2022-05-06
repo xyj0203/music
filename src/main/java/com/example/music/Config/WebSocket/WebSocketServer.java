@@ -2,10 +2,15 @@ package com.example.music.Config.WebSocket;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.example.music.Utils.RedisKeyUtils;
+import com.example.music.Utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
@@ -24,10 +29,17 @@ public class WebSocketServer {
     private Session session;
     //用户id
     private Long userId;
+    private static RedisUtils redisUtils;
+    @Autowired
+    public WebSocketServer(RedisUtils redisUtils){
+        WebSocketServer.redisUtils = redisUtils;
+    }
+
+    public WebSocketServer() {
+    }
 
     @OnOpen
     public void onOpen(Session session,@PathParam("userId") Long userId){
-        System.out.println(1111);
         this.session = session;
         this.userId = userId;
         if (webSocketMap.containsKey(userId)){
@@ -38,9 +50,8 @@ public class WebSocketServer {
             webSocketMap.put(userId,this);
             addOnlineCount();
         }
-
+        redisUtils.setBit(RedisKeyUtils.ONLINE_STATE,userId,true);
         log.info("有新的连接加入，当前在线人数为："+getOnlineCount());
-
         try{
             sendMessage("连接成功！");
         }catch (IOException e){
@@ -50,14 +61,13 @@ public class WebSocketServer {
 
     @OnError
     public void OnError(Session session,Throwable error){
-        System.out.println("我出错了");
+        error.printStackTrace();
+        log.info("我出错了");
     }
 
     @OnMessage
     public void OnMessage(String message,Session session) {
-        System.out.println(session.getId());
         log.info("用户："+this.userId+"发送消息："+message);
-
         if (StringUtils.hasLength(message)){
             try {
                 JSONObject jsonObject = JSON.parseObject(message);
@@ -102,6 +112,7 @@ public class WebSocketServer {
         if (webSocketMap.containsKey(userId)) {
             webSocketMap.remove(userId);
             subOnlineCount();
+            redisUtils.setBit(RedisKeyUtils.ONLINE_STATE,userId,false);
         }
         log.info("用户退出:" + userId + ",当前在线人数为:" + getOnlineCount());
     }
@@ -117,4 +128,5 @@ public class WebSocketServer {
     public static synchronized void addOnlineCount() {
         WebSocketServer.onlineCount++;
     }
+
 }

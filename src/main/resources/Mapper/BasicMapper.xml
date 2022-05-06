@@ -5,8 +5,8 @@
 <mapper namespace="com.example.music.Mapper.BasicMapper">
 
     <insert id="register" parameterType="com.example.music.Entity.Pojo.Entity.User">
-        insert into x_user(user_id,account,password,email,head_img,level,online)
-        values(null,#{account},#{password},#{email},#{headImg},#{userType.level},#{online})
+        insert into x_user(user_id,account,password,email,head_img,level)
+        values(null,#{account},#{password},#{email},#{headImg},#{userType.level})
     </insert>
     <select id="selectUserByEmail" resultType="com.example.music.Entity.Pojo.Entity.User"
             parameterType="java.lang.String">

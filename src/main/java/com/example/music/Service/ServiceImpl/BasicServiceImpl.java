@@ -34,6 +34,7 @@ public class BasicServiceImpl implements BasicService {
             return ResultObjectModel.fail("账号已被注册");
         }
         User user = new User();
+        user.setLevel(2);
         user.setAccount(account);
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));

@@ -4,10 +4,10 @@ import com.example.music.Config.Security.Interceptor.AccessSecurityInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
+
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
+
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -37,8 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/webjars/**",
                         "/v2/**",
                         "/api/**",
-                        "/doc.html",
+                        "/doc.html/**",
                         "/Basic/**",
+                        "/favicon.ico",
                         "/message/**")
                 .permitAll();
 
@@ -51,8 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.exceptionHandling().authenticationEntryPoint(new UnauthEntryPoint())
                 .accessDeniedHandler(new CustomizedAccessDeniedHandler());
         http.apply(thirdAuthenticationSecurityConfig);
-        http.csrf().disable() // 解决POST请求403错误
-                .authorizeRequests().anyRequest().authenticated();
+        http.csrf().disable().authorizeRequests().anyRequest().authenticated();
         http.addFilterBefore(accessSecurityInterceptor, FilterSecurityInterceptor.class);
     }
 

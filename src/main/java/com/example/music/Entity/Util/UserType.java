@@ -33,4 +33,13 @@ public enum UserType {
     public String getDescription() {
         return description;
     }
+
+    public static UserType getUserType(int level){
+        for(UserType userType:UserType.values()){
+            if(userType.getLevel()==level){
+                return userType;
+            }
+        }
+        return UNKNOWN;
+    }
 }

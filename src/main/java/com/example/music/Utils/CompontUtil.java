@@ -8,6 +8,10 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 import javax.mail.internet.MimeMessage;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 @Slf4j
@@ -25,9 +29,10 @@ public class CompontUtil {
 
     /**
      * 发送邮件
+     *
      * @return
      */
-    public  String  sendEmail(String toUser){
+    public String sendEmail(String toUser) {
         MimeMessage message = javaMailSender.createMimeMessage();
         try {
             StringBuilder stringBuilder = new StringBuilder("您本次的验证码为: ");
@@ -43,16 +48,23 @@ public class CompontUtil {
             mimeMessageHelper.setFrom(sendUser);
             mimeMessageHelper.setTo(toUser);
             mimeMessageHelper.setSubject("验证码邮件");
-            mimeMessageHelper.setText(stringBuilder.toString(),true);
+            mimeMessageHelper.setText(stringBuilder.toString(), true);
             javaMailSender.send(message);
             boolean set = redisUtils.set(toUser, sb.toString(), 300);
             return set == true ? sb.toString() : null;
-        }catch (Exception e){
-            log.info("{}发送失败",toUser);
+        } catch (Exception e) {
+            log.info("{}发送失败", toUser);
             e.printStackTrace();
             return null;
         }
     }
 
-
+    //计算两个日期相差年数
+    public int yearDateDiff(long startDate, long endDate) {
+        Calendar calStartTime = Calendar.getInstance(); //获取日历实例
+        Calendar calEndTime = Calendar.getInstance();
+        calStartTime.setTime(new Date(startDate)); //字符串按照指定格式转化为日期
+        calEndTime.setTime(new Date(endDate));
+        return calEndTime.get(Calendar.YEAR) - calStartTime.get(Calendar.YEAR);
+    }
 }

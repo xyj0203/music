@@ -710,4 +710,27 @@ public class RedisUtils {
     public Object rank(String key, Object obj) {
         return redisTemplate.opsForZSet().rank(key, obj);
     }
+
+    /**
+     * 设置bitmap
+     * @param key
+     * @param offset
+     * @param value
+     */
+    public void setBit(String key, long offset, boolean value) {
+        Boolean aBoolean = redisTemplate.opsForValue().setBit(key, offset, value);
+        log.info("setBit key:{},offset:{},value:{}",key,offset,value);
+    }
+
+    /**
+     * 获取bitmap
+     * @param key
+     * @param offset
+     * @return
+     */
+    public boolean getBit(String key, long offset) {
+        Boolean aBoolean = redisTemplate.opsForValue().getBit(key, offset);
+        log.info("getBit key:{},offset:{}",key,offset);
+        return aBoolean;
+    }
 }

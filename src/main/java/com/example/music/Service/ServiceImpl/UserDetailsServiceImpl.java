@@ -3,18 +3,14 @@ package com.example.music.Service.ServiceImpl;
 import com.example.music.Entity.Pojo.Entity.SecurityUser;
 import com.example.music.Entity.Pojo.Entity.User;
 import com.example.music.Entity.Util.LoginType;
-import com.example.music.Entity.Util.UserType;
 import com.example.music.Mapper.BasicMapper;
 import com.example.music.Mapper.PermissionMapper;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Service

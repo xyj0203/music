@@ -27,8 +27,6 @@ public class GithubClientService {
 
     @Autowired
     private RestTemplate restTemplate;
-    @Nullable
-    private WebApplicationContext webApplicationContext;
 
     public Map<String, String> getAccessToken(String code) {
         Map<String, String> map = new HashMap<>();

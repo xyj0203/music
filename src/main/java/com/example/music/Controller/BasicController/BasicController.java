@@ -6,6 +6,7 @@ import com.example.music.Entity.Pojo.Entity.Img;
 import com.example.music.Entity.Pojo.ResultObjectModel;
 import com.example.music.Mapper.BasicMapper;
 import com.example.music.Service.BasicService;
+import com.example.music.Service.LinkedService;
 import com.example.music.Service.ServiceImpl.GithubClientService;
 import com.example.music.Utils.CompontUtil;
 import com.github.pagehelper.PageHelper;
@@ -41,7 +42,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/Basic")
 @Validated
-@CrossOrigin
 public class BasicController {
 
     @Autowired
@@ -54,6 +54,8 @@ public class BasicController {
     private GithubClientService githubClientService;
     @Autowired
     private RestTemplate restTemplate;
+    @Autowired
+    private LinkedService linkedService;
     @Autowired
     private BasicMapper basicMapper;
 
@@ -147,5 +149,15 @@ public class BasicController {
         PageInfo<Img> pageInfo = new PageInfo<>(imgs);
         System.out.println(pageInfo.getTotal());
         return ResultObjectModel.success("请求成功",pageInfo);
+    }
+
+    @ApiOperation("获取联系人详情")
+    @ApiImplicitParam(name = "account",value = "联系人账号",required = true,dataType = "String",paramType = "query")
+    @GetMapping("/searchLinkedMan")
+    public ResultObjectModel searchLinkedMan(@NotNull String account) {
+        if (account.trim().isEmpty()) {
+            return ResultObjectModel.success("请输入账号！");
+        }
+        return linkedService.searchLinkedMan(account);
     }
 }
