@@ -47,4 +47,11 @@ public interface LinkedService {
      * @return
      */
     ResultObjectModel getLinkedManList(Long userId);
+
+    /**
+     * 删除联系人
+     * @param userId
+     * @return
+     */
+    ResultObjectModel deleteLinkedMan(Long userId);
 }

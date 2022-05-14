@@ -67,4 +67,9 @@ public class CompontUtil {
         calEndTime.setTime(new Date(endDate));
         return calEndTime.get(Calendar.YEAR) - calStartTime.get(Calendar.YEAR);
     }
+
+    public Long getRandomLong(Long min, Long max) {
+        Random random = new Random();
+        return random.nextLong() % (max - min + 1) + min;
+    }
 }

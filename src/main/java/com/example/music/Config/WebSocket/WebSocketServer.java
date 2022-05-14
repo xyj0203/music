@@ -6,6 +6,7 @@ import com.example.music.Utils.RedisKeyUtils;
 import com.example.music.Utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.json.GsonTester;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -72,13 +73,15 @@ public class WebSocketServer {
             try {
                 JSONObject jsonObject = JSON.parseObject(message);
                 jsonObject.put("fromUserId",this.userId);
-                String toUserId = jsonObject.getString("toUserId");
+                String toUserId = jsonObject.getString("privateUsers");
                 if (StringUtils.hasLength(toUserId) && webSocketMap.containsKey(Long.valueOf(toUserId))){
-                    webSocketMap.get(toUserId).sendMessage(jsonObject.toJSONString());
+                    webSocketMap.get(Long.valueOf(toUserId)).sendMessage(jsonObject.toJSONString());
                 }else{
+                    System.out.println("用户不在线！");
                     log.error("用户："+userId+"消息发送失败！");
                 }
             }catch (Exception e){
+                e.printStackTrace();
                 log.error("用户："+userId+"消息发送失败！");
             }
         }

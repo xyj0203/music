@@ -54,4 +54,11 @@ public interface LinkedMapper {
      * @return
      */
     List<User> queryLinkedManList(Long userId);
+
+    /**
+     * 删除联系人
+     * @param userId
+     * @return
+     */
+    int deleteLinkedMan(Long userId);
 }

@@ -101,6 +101,9 @@ public class LinkedServiceImpl implements LinkedService {
         if (status == 0){
             return ResultObjectModel.fail("状态不能修改");
         }
+        if (isLinked(userId, friendId)) {
+            return ResultObjectModel.fail("已经是好友");
+        }
         int i = linkedMapper.updateApplyStatus(applyId, status);
         if (i == 1){
             if(status == 1){
@@ -119,7 +122,9 @@ public class LinkedServiceImpl implements LinkedService {
 
     @Override
     public ResultObjectModel getApplyList(Long userId) {
+        System.out.println("userId:"+userId);
         List<ApplyVo> applyVos = linkedMapper.queryApplyList(userId);
+        System.out.println(applyVos.size());
         for (ApplyVo applyVo : applyVos) {
             switch (applyVo.getApplyState()){
                 case 0:
@@ -180,5 +185,15 @@ public class LinkedServiceImpl implements LinkedService {
             userVos.add(userVo);
         }
         return ResultObjectModel.success(userVos);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResultObjectModel deleteLinkedMan(Long userId) {
+        int i = linkedMapper.deleteLinkedMan(userId);
+        if (i == 2){
+            return ResultObjectModel.success("删除成功");
+        }
+        return ResultObjectModel.fail("删除失败");
     }
 }

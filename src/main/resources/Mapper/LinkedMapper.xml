@@ -28,6 +28,10 @@
         where apply_id = #{applyId}
     </update>
 
+    <delete id="deleteLinkedMan" parameterType="java.lang.Long">
+        delete from friend
+        where friend_id = #{userId} OR user_id = #{userId}
+    </delete>
 
     <select id="isLinked" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM friend WHERE user_id = #{userId} AND friend_id = #{friendId}
@@ -39,6 +43,7 @@
                from application a
         left join x_user u on a.apply_user_id = u.user_id
         where recieve_user_id = #{userId}
+        order by send_time desc
     </select>
     <select id="queryLinkedManList" resultType="com.example.music.Entity.Pojo.Entity.User"
             parameterType="java.lang.Long">

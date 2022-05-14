@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.music.Mapper.MessageMapper">
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="messageId">
+        insert into user_message (message_id, send_Id, reciever_id, content, send_time,is_read,type,message_state)
+        values (#{messageId}, #{sendId}, #{recieverId}, #{content}, #{sendTime},#{isRead},#{type},#{messageState})
+    </insert>
+    <update id="markMessageAsRead">
+        update user_message
+        set
+        <foreach collection="messageIds" item="messageId" separator=",">
+            is_read = 1
+        </foreach>
+        where reciever_id = #{userId}
+    </update>
+</mapper>

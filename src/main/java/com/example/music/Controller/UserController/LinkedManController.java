@@ -36,15 +36,15 @@ public class LinkedManController {
     @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "String", paramType = "query")
     @GetMapping("/delete")
     public ResultObjectModel deleteLinkedMan(@NotNull Long userId) {
-        return null;
+        return linkedService.deleteLinkedMan(userId);
     }
 
-    @ApiOperation(value = "修改联系人", notes = "修改联系人")
-    @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "String", paramType = "query")
-    @GetMapping("/update")
-    public ResultObjectModel updateLinkedMan(@NotNull Long userId) {
-        return null;
-    }
+//    @ApiOperation(value = "修改联系人", notes = "修改联系人")
+//    @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "String", paramType = "query")
+//    @GetMapping("/update")
+//    public ResultObjectModel updateLinkedMan(@NotNull Long userId) {
+//        return null;
+//    }
 
     @ApiOperation(value = "申请添加联系人", notes = "申请添加联系人")
     @ApiImplicitParams({
@@ -83,6 +83,4 @@ public class LinkedManController {
     public ResultObjectModel getApplyList( @ApiIgnore @AuthenticationPrincipal SecurityUser securityUser) {
         return linkedService.getApplyList(securityUser.getUserId());
     }
-
-
 }

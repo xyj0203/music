@@ -127,4 +127,9 @@ public class ThirdAuthenticationFilter extends AbstractAuthenticationProcessingF
         String token = tokenManager.createToken(map);
         ResultObjectModel.returnvalue(request, response,ResultObjectModel.success("登录成功！",token));
     }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        ResultObjectModel.returnvalue(request, response,ResultObjectModel.fail("登录失败！"));
+    }
 }
