@@ -1,0 +1,43 @@
+spring:
+    datasource:
+      druid:
+        url: jdbc:mysql://101.35.50.204:3306/music?useUnicode=true&characterEncoding=utf8&useSSL=false
+        username: root
+        password: XxjXyj0601@
+        driverClassName: com.mysql.cj.jdbc.Driver
+        initialSize: 2
+        minIdle: 2
+        maxActive: 20
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
+        filters: [ ]
+mybatis:
+  mapper-locations: classpath:Mapper/*.xml
+  type-aliases-package: com.menu.Pojo.*
+  configuration:
+    #开启下划线与驼峰映射
+    map-underscore-to-camel-case: true
+pagehelper:
+  #数据库语言-helperDialect
+  helperDialect: mysql
+  # 分页参数合理化-reasonable
+  # 默认是false。
+  # 启用合理化时，如果pageNum<1会查询第一页，如果pageNum>pages会查询最后一页；
+  # 禁用合理化时，如果pageNum<1或pageNum>pages会返回空数据
+  reasonable: true
+  # 支持通过 Mapper 接口参数来传递分页参数-supportMethodsArguments
+  # 默认值 false
+  supportMethodsArguments: true
+  # 为了支持startPage(Object params)方法，增加了该参数来配置参数映射-params
+  # 用于从对象中根据属性名取值
+  #  默认值为 countSql
+  params: count=countSql
+
+

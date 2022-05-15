@@ -1,0 +1,62 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 100MB
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: "d011264c4fd07f6ad826"
+            clientSecret: "b6e2a0cec34f4d420a5376d4e0fd0b16ea3ad563"
+
+
+  redis:
+    host: 101.35.50.204
+    port: 6379
+    password: xiexiaojia@#$%ASD
+    database: 0
+    jedis:
+      pool:
+        max-wait: 100
+        max-active: 200
+        max-idle: 10
+        min-idle: 1
+    timeout: 5000
+  mail:
+    host: smtp.qq.com
+    username: 2582504569@qq.com
+    password: lxapqdqgjxlhdigi
+    default-encoding: UTF-8
+    port: 465
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
+          auth: true
+          socketFactory:
+            port: 465
+            fallback: false
+            class: javax.net.ssl.SSLSocketFactory
+          starttls:
+            enable: true
+            required: true
+  logging:
+    level:
+      com.example.music: debug
+    file:
+      name: springboot.log
+  main:
+    allow-circular-references: true
+management:
+  security:
+    enabled=false:
+
+swagger:
+  swagger-enable: true
+

@@ -1,0 +1,7 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /music
+spring:
+  profiles:
+    active: config,dao,service,tool
