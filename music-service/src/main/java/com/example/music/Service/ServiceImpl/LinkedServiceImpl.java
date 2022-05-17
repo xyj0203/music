@@ -9,10 +9,10 @@ import com.example.music.Entity.Util.UserType;
 import com.example.music.Mapper.BasicMapper;
 import com.example.music.Mapper.LinkedMapper;
 import com.example.music.Service.LinkedService;
+import com.example.music.Utils.BeanUtils;
 import com.example.music.Utils.CompontUtil;
 import com.example.music.Utils.RedisKeyUtils;
 import com.example.music.Utils.RedisUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +34,8 @@ public class LinkedServiceImpl implements LinkedService {
     private CompontUtil compontUtil;
     @Autowired
     private RedisUtils redisUtils;
-
+    @Autowired
+    private BeanUtils beanUtils;
 
 
     @Override
@@ -51,33 +52,7 @@ public class LinkedServiceImpl implements LinkedService {
         if (user == null) {
             return ResultObjectModel.fail("没有该用户");
         }
-        UserVo userVo = new UserVo();
-        BeanUtils.copyProperties(user,userVo);
-        Integer sex = user.getSex();
-        if (sex == null){
-            userVo.setSex("未知");
-        }else if (sex == 0){
-            userVo.setSex("男");
-        }else if (sex == 1){
-            userVo.setSex("女");
-        }
-        Date birthday = user.getBirthday();
-        if (birthday == null){
-            userVo.setBirthday("未知");
-        }else{
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String format = simpleDateFormat.format(birthday);
-            userVo.setBirthday(format);
-            userVo.setAge(compontUtil.yearDateDiff(birthday.getTime(),System.currentTimeMillis()));
-        }
-        boolean bit = redisUtils.getBit(RedisKeyUtils.ONLINE_STATE, user.getUserId());
-        if (bit){
-            userVo.setOnline("在线");
-        }else {
-            userVo.setOnline("离线");
-        }
-        UserType userType = UserType.getUserType(user.getLevel());
-        userVo.setLevel(userType.getName());
+        UserVo userVo = beanUtils.userToUserVo(user);
         return ResultObjectModel.success(userVo);
     }
 
@@ -154,33 +129,7 @@ public class LinkedServiceImpl implements LinkedService {
         List<User> users = linkedMapper.queryLinkedManList(userId);
         List<UserVo> userVos = new ArrayList<>();
         for (User user : users) {
-            UserVo userVo = new UserVo();
-            BeanUtils.copyProperties(user,userVo);
-            Integer sex = user.getSex();
-            if (sex == null){
-                userVo.setSex("未知");
-            }else if (sex == 0){
-                userVo.setSex("男");
-            }else if (sex == 1){
-                userVo.setSex("女");
-            }
-            Date birthday = user.getBirthday();
-            if (birthday == null){
-                userVo.setBirthday("未知");
-            }else{
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                String format = simpleDateFormat.format(birthday);
-                userVo.setBirthday(format);
-                userVo.setAge(compontUtil.yearDateDiff(birthday.getTime(),System.currentTimeMillis()));
-            }
-            boolean bit = redisUtils.getBit(RedisKeyUtils.ONLINE_STATE, user.getUserId());
-            if (bit){
-                userVo.setOnline("在线");
-            }else {
-                userVo.setOnline("离线");
-            }
-            UserType userType = UserType.getUserType(user.getLevel());
-            userVo.setLevel(userType.getName());
+            UserVo userVo = beanUtils.userToUserVo(user);
             userVos.add(userVo);
         }
         return ResultObjectModel.success(userVos);

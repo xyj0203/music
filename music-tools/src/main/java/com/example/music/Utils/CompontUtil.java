@@ -70,4 +70,6 @@ public class CompontUtil {
         Random random = new Random();
         return random.nextLong() % (max - min + 1) + min;
     }
+
+    //处理lrc文件读取数据至数据ku
 }

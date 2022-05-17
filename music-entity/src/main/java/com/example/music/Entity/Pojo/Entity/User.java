@@ -12,6 +12,7 @@ import java.util.Date;
 @Setter
 @ToString
 public class User {
+
     private Long userId;
     private String account;
     @Email(message = "必须为邮箱格式")
