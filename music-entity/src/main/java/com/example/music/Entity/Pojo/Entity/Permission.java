@@ -1,21 +1,31 @@
 package com.example.music.Entity.Pojo.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.baomidou.mybatisplus.annotation.TableId;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.*;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Permission {
-    //id
-    private Integer permission_Id;
-    //权限形容
+    @TableId
+    @ApiModelProperty(value = "权限id",hidden = true)
+    private Long permissionId;
+    @ApiModelProperty("权限形容")
+    @NotNull
+    @Length(min = 1,message = "权限形容不能为空")
     private String description;
-    //权限路径
+    @ApiModelProperty("权限路径")
+    @NotNull
+    @Length(min = 1,message = "权限路径不能为空")
     private String path;
-    //权限名称
+    @NotNull
+    @Length(min = 1,message = "权限名称不能为空")
+    @ApiModelProperty("权限名称")
     private String name;
 }

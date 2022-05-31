@@ -8,7 +8,6 @@
     </select>
     <select id="findAllByUserId" resultType="com.example.music.Entity.Pojo.Entity.Permission"
             parameterType="java.lang.Long">
-
     </select>
     <select id="selectPermissionByLevel" resultType="java.lang.String" parameterType="java.lang.Integer">
         select name from permission

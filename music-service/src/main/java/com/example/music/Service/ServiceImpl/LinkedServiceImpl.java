@@ -5,13 +5,11 @@ import com.example.music.Entity.Pojo.Entity.User;
 import com.example.music.Entity.Pojo.ResultObjectModel;
 import com.example.music.Entity.Pojo.Vo.ApplyVo;
 import com.example.music.Entity.Pojo.Vo.UserVo;
-import com.example.music.Entity.Util.UserType;
 import com.example.music.Mapper.BasicMapper;
 import com.example.music.Mapper.LinkedMapper;
 import com.example.music.Service.LinkedService;
 import com.example.music.Utils.BeanUtils;
 import com.example.music.Utils.CompontUtil;
-import com.example.music.Utils.RedisKeyUtils;
 import com.example.music.Utils.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service

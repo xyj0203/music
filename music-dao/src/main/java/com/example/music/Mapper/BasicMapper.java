@@ -6,7 +6,6 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper
 public interface BasicMapper {
     /**
      * 注册用户
