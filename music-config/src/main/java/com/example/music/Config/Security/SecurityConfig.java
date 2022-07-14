@@ -48,7 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.exceptionHandling().authenticationEntryPoint(new UnauthEntryPoint())
                 .accessDeniedHandler(new CustomizedAccessDeniedHandler());
         http.apply(thirdAuthenticationSecurityConfig);
-        http.csrf().disable().authorizeRequests().anyRequest().authenticated();
+        http.csrf().disable().
+                authorizeRequests().anyRequest().authenticated();
         http.addFilterBefore(accessSecurityInterceptor, FilterSecurityInterceptor.class);
     }
 

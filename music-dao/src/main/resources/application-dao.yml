@@ -18,6 +18,15 @@ spring:
         poolPreparedStatements: true
         maxPoolPreparedStatementPerConnectionSize: 20
         filters: [ ]
+    jpa:
+      database: MYSQL
+      show-sql: true
+      open-in-view: true
+      properties:
+        hibernate:
+          enable_lazy_load_no_trans: true #使用延时加载时控制Session的生命周期
+          dialect: org.hibernate.dialect.MySQL5Dialect
+          ddl-auto: update
 mybatis-plus:
   configuration:
     #这个配置会将执行的sql打印出来，在开发或测试的时候可以用

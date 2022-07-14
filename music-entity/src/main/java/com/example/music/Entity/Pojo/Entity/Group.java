@@ -1,5 +1,6 @@
 package com.example.music.Entity.Pojo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,8 +31,8 @@ public class Group {
     @NotNull
     @ApiModelProperty(value = "群头像")
     private String groupImg;
-    @ApiModelProperty(value = "创建时间", example = "2019-01-01 00:00:00",hidden = true)
-    private Timestamp groupCreateTime = new Timestamp(System.currentTimeMillis());
+    @ApiModelProperty(name = "groupCreateTime",value = "创建时间", example = "2019-01-01 00:00:00",hidden = true)
+    private String groupCreateTime;
     @NotNull(message = "组描述不能为空")
     @ApiModelProperty(value = "组描述", example = "测试组描述")
     private String groupDescription;
