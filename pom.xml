@@ -5,11 +5,11 @@
     <packaging>pom</packaging>
     <modules>
         <module>music-config</module>
+        <module>music-entity</module>
         <module>music-dao</module>
         <module>music-service</module>
         <module>music-tools</module>
         <module>music-web</module>
-        <module>music-entity</module>
         <module>music-exception</module>
     </modules>
     <parent>
