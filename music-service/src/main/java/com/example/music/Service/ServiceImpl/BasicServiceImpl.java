@@ -43,4 +43,5 @@ public class BasicServiceImpl implements BasicService {
         }
         return ResultObjectModel.fail("注册失败");
     }
+
 }

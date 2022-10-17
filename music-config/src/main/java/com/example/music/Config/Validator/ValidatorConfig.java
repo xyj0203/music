@@ -15,7 +15,6 @@ import javax.validation.ValidatorFactory;
  */
 @Configuration
 public class ValidatorConfig {
-
     @Bean
     public Validator registerValidator() {
         ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class)

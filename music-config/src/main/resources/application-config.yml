@@ -59,4 +59,13 @@ management:
 
 swagger:
   swagger-enable: true
+fdfs:
+  so-timeout: 3000
+  connect-timeout: 1000
+  thumb-image:
+    width: 60
+    height: 60
+  tracker-list:
+    - 192.168.248.128:22122
+
 

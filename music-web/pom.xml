@@ -7,6 +7,7 @@
         <groupId>com.example</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+    <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>web</artifactId>
@@ -35,7 +36,6 @@
             <groupId>com.example</groupId>
             <artifactId>music-config</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>

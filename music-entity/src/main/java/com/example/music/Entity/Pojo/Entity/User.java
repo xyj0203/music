@@ -3,6 +3,7 @@ package com.example.music.Entity.Pojo.Entity;
 import com.example.music.Entity.Util.UserType;
 import lombok.*;
 
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.Date;
 
@@ -11,8 +12,11 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
+@Entity
+@Table(name = "x_user")
 public class User {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
     private String account;
     @Email(message = "必须为邮箱格式")
